@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Depósito Central & Fulfillment — Envíos DosRuedas Mar del Plata</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    :root {
+      --font-display: "Anton", sans-serif;
+      --font-subheading: "Bebas Neue", sans-serif;
+      --font-sans: "Outfit", sans-serif;
+      --font-mono: "Geist Mono", monospace;
+      --color-brand-blue-500: #0950F6;
+      --color-brand-blue-400: #3570F8;
+      --color-brand-blue-300: #628FF9;
+      --color-brand-blue-200: #8EAFFB;
+      --color-brand-blue-100: #BACEFD;
+      --color-brand-blue-50: #E6EEFE;
+      --color-brand-yellow-500: #FFEC01;
+      --color-brand-yellow-400: #FFF12E;
+      --color-white: #FFFFFF;
+      --color-neutral-50: #F8FAFC;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      color: var(--color-brand-blue-500);
+      background-color: var(--color-white);
+      line-height: 1.625;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* Header */
+    .eds-header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      background: var(--color-brand-blue-500);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(12px);
+    }
+    .eds-header-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      height: 72px;
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .eds-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+    }
+    .eds-logo img {
+      width: 40px;
+      height: 40px;
+      border-radius: 9999px;
+    }
+    .eds-logo-text {
+      font-family: var(--font-display);
+      font-size: 24px;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1;
+    }
+    .eds-logo-text .white { color: var(--color-white); }
+    .eds-logo-text .yellow { color: var(--color-brand-yellow-500); }
+
+    .eds-nav {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    /* Buttons */
+    .eds-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-subheading);
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-radius: 9999px;
+      padding: 10px 24px;
+      min-height: 44px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+      border: 1px solid transparent;
+    }
+    .eds-btn:active {
+      transform: scale(0.98);
+    }
+    .eds-btn-primary {
+      background: var(--color-brand-yellow-500);
+      color: var(--color-brand-blue-500);
+      font-weight: 400;
+      box-shadow: 0 2px 8px rgba(255, 236, 1, 0.3);
+    }
+    .eds-btn-primary:hover {
+      background: var(--color-brand-yellow-400);
+      box-shadow: 0 0 20px rgba(255, 236, 1, 0.5);
+      transform: translateY(-1px);
+    }
+    .eds-btn-secondary-dark {
+      background: transparent;
+      color: var(--color-white);
+      border: 2px solid rgba(255, 255, 255, 0.4);
+    }
+    .eds-btn-secondary-dark:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: var(--color-white);
+    }
+    .eds-btn-secondary-light {
+      background: var(--color-white);
+      color: var(--color-brand-blue-500);
+      border: 2px solid var(--color-brand-blue-500);
+    }
+    .eds-btn-secondary-light:hover {
+      background: var(--color-brand-blue-50);
+    }
+
+    /* Badge */
+    .eds-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-subheading);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      width: fit-content;
+    }
+    .eds-badge-accent {
+      background: var(--color-brand-yellow-500);
+      color: var(--color-brand-blue-500);
+    }
+    .eds-badge-invert {
+      background: rgba(255,255,255,0.15);
+      color: var(--color-white);
+      border: 1px solid rgba(255,255,255,0.25);
+    }
+    .eds-badge-muted {
+      background: var(--color-brand-blue-50);
+      color: var(--color-brand-blue-500);
+      border: 1px solid var(--color-brand-blue-100);
+    }
+
+    /* Hero */
+    .eds-hero {
+      background: var(--color-brand-blue-500);
+      color: var(--color-white);
+      padding: 80px 24px;
+      position: relative;
+      overflow: hidden;
+    }
+    .eds-hero-inner {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 48px;
+      align-items: center;
+    }
+    @media (max-width: 900px) {
+      .eds-hero-inner {
+        grid-template-columns: 1fr;
+      }
+    }
+    .eds-h1 {
+      font-family: var(--font-display);
+      font-size: clamp(38px, 5.5vw, 68px);
+      line-height: 0.92;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      margin: 20px 0;
+    }
+    .eds-pill-highlight {
+      display: inline-block;
+      background: var(--color-brand-yellow-500);
+      color: var(--color-brand-blue-500);
+      border-radius: 9999px;
+      padding: 0 0.35em;
+      transform: rotate(-1deg);
+      line-height: 1.05;
+    }
+    .eds-lead {
+      font-size: clamp(16px, 1.8vw, 19px);
+      line-height: 1.6;
+      font-weight: 300;
+      color: rgba(255,255,255,0.9);
+      max-width: 56ch;
+      margin-bottom: 28px;
+    }
+    .eds-hero-img-wrap {
+      display: flex;
+      justify-content: center;
+    }
+    .eds-hero-img {
+      width: 100%;
+      max-width: 480px;
+      border-radius: 24px;
+      box-shadow: 0 24px 64px rgba(9, 80, 246, 0.45);
+      border: 2px solid rgba(255,255,255,0.15);
+    }
+
+    /* Stat List */
+    .eds-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 32px;
+      margin-top: 36px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.15);
+    }
+    .eds-stat-item {
+      display: flex;
+      flex-direction: column;
+    }
+    .eds-stat-val {
+      font-family: var(--font-mono);
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--color-brand-yellow-500);
+    }
+    .eds-stat-lbl {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: rgba(255,255,255,0.8);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Section & Container */
+    .eds-section {
+      padding: 72px 24px;
+    }
+    .eds-section-neutral {
+      background: var(--color-neutral-50);
+    }
+    .eds-section-blue {
+      background: var(--color-brand-blue-500);
+      color: var(--color-white);
+    }
+    .eds-container {
+      max-width: 1280px;
+      margin: 0 auto;
+    }
+    .eds-section-head {
+      margin-bottom: 40px;
+    }
+    .eds-h2 {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 4vw, 44px);
+      text-transform: uppercase;
+      letter-spacing: -0.025em;
+      line-height: 1.05;
+      margin: 12px 0 8px;
+    }
+
+    /* Grid */
+    .eds-grid-4 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+    .eds-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+    }
+
+    /* Double-bezel card */
+    .double-bezel-outer {
+      background-color: rgba(230, 238, 254, 0.8);
+      border: 1px solid var(--color-brand-blue-100);
+      border-radius: 24px;
+      padding: 8px;
+      box-shadow: 0 25px 50px -12px rgba(9, 80, 246, 0.15);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .double-bezel-outer:hover {
+      border-color: var(--color-brand-blue-300);
+      box-shadow: 0 24px 64px rgba(9, 80, 246, 0.22);
+      transform: translateY(-4px);
+    }
+    .double-bezel-inner {
+      background: var(--color-white);
+      border-radius: 16px;
+      padding: 24px;
+      border: 1px solid rgba(230, 238, 254, 0.6);
+      box-shadow: inset 0 2px 4px rgba(9, 80, 246, 0.05);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Feature card internals */
+    .eds-icon-pill {
+      width: 44px;
+      height: 44px;
+      border-radius: 9999px;
+      background: var(--color-brand-yellow-500);
+      color: var(--color-brand-blue-500);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+    .eds-card-title {
+      font-family: var(--font-subheading);
+      font-size: 22px;
+      text-transform: uppercase;
+      letter-spacing: 0.025em;
+      margin-bottom: 8px;
+      color: var(--color-brand-blue-500);
+    }
+    .eds-card-body {
+      font-size: 14px;
+      line-height: 1.625;
+      color: var(--color-brand-blue-500);
+    }
+
+    /* Pricing card */
+    .eds-pricing-card {
+      position: relative;
+    }
+    .eds-pricing-badge {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      background: var(--color-brand-blue-50);
+      color: var(--color-brand-blue-500);
+      width: fit-content;
+      margin-bottom: 8px;
+    }
+    .eds-pricing-badge-featured {
+      background: var(--color-brand-yellow-500);
+      color: var(--color-brand-blue-500);
+    }
+    .eds-price-number {
+      font-family: var(--font-mono);
+      font-size: 38px;
+      font-weight: 700;
+      color: var(--color-brand-blue-500);
+      line-height: 1;
+      margin: 12px 0 16px;
+    }
+    .eds-price-unit {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-brand-blue-500);
+    }
+    .eds-feature-list {
+      list-style: none;
+      margin: 16px 0 24px;
+      padding: 16px 0 0;
+      border-top: 1px solid var(--color-brand-blue-100);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex-grow: 1;
+    }
+    .eds-feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+
+    /* Steps */
+    .eds-steps-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+    .eds-step-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-brand-blue-100);
+      border-radius: 16px;
+      padding: 24px;
+      position: relative;
+    }
+    .eds-step-num {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      font-weight: 700;
+      background: var(--color-brand-blue-50);
+      color: var(--color-brand-blue-500);
+      padding: 4px 10px;
+      border-radius: 9999px;
+      display: inline-block;
+      margin-bottom: 12px;
+    }
+
+    /* Calculator */
+    .eds-calc-box {
+      background: var(--color-white);
+      color: var(--color-brand-blue-500);
+      padding: 32px;
+      border-radius: 20px;
+      box-shadow: 0 20px 40px -16px rgba(9, 80, 246, 0.3);
+    }
+    .eds-slider {
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--color-brand-blue-100);
+      outline: none;
+      accent-color: var(--color-brand-blue-500);
+      margin: 16px 0;
+    }
+
+    /* Footer */
+    .eds-footer {
+      background: var(--color-brand-blue-500);
+      color: var(--color-white);
+      padding: 48px 24px 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+    }
+    .eds-footer-grid {
+      max-width: 1280px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
+      margin-bottom: 36px;
+    }
+    .eds-footer-col h4 {
+      font-family: var(--font-subheading);
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 14px;
+      color: var(--color-brand-yellow-500);
+    }
+    .eds-footer-col p, .eds-footer-col a {
+      font-size: 14px;
+      color: rgba(255,255,255,0.85);
+      text-decoration: none;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .eds-footer-bottom {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      display: flex;
+      justify-content: space-between;
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: rgba(255,255,255,0.6);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="eds-header">
+    <div class="eds-header-inner">
+      <a href="ui_kits/website/index.html" class="eds-logo" aria-label="Inicio Envíos DosRuedas">
+        <img src="assets/logo-envios-simplified.webp" alt="Logo Envíos DosRuedas" width="40" height="40" decoding="async">
+        <span class="eds-logo-text"><span class="white">ENVÍOS</span> <span class="yellow">DOSRUEDAS</span></span>
+      </a>
+      <nav class="eds-nav">
+        <a href="ui_kits/website/index.html" class="eds-btn eds-btn-secondary-dark">Ver UI Kit</a>
+        <a href="https://wa.me/542236602699" target="_blank" rel="noopener noreferrer" class="eds-btn eds-btn-primary">Cotizá por WhatsApp</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="eds-hero">
+    <div class="eds-hero-inner">
+      <div>
+        <span class="eds-badge eds-badge-accent">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-5a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v5"></path><path d="M4 10.95V19a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8.05"></path><path d="M17.774 10.31a1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.451 0 1.12 1.12 0 0 0-1.548 0 2.5 2.5 0 0 1-3.452 0 1.12 1.12 0 0 0-1.549 0 2.5 2.5 0 0 1-3.77-3.248l2.889-4.184A2 2 0 0 1 7 2h10a2 2 0 0 1 1.653.873l2.895 4.192a2.5 2.5 0 0 1-3.774 3.244"></path></svg>
+          Depósito central · Friuli 1972
+        </span>
+        <h1 class="eds-h1">Almacená en Mar del Plata, <span class="eds-pill-highlight">vendé sin frenar</span></h1>
+        <p class="eds-lead">Guardamos tu stock en nuestra base central de Friuli 1972. Al vender, empaquetamos en 15 minutos con código QR y despachamos en el día con motos propias.</p>
+        <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+          <a href="#contacto" class="eds-btn eds-btn-primary">Cotizá tu depósito</a>
+          <a href="#simulador" class="eds-btn eds-btn-secondary-dark">Simular costos</a>
+        </div>
+        <div class="eds-stats">
+          <div class="eds-stat-item">
+            <span class="eds-stat-val">Friuli 1972</span>
+            <span class="eds-stat-lbl">Base operativa MDQ</span>
+          </div>
+          <div class="eds-stat-item">
+            <span class="eds-stat-val">15 min</span>
+            <span class="eds-stat-lbl">Picking y despacho</span>
+          </div>
+          <div class="eds-stat-item">
+            <span class="eds-stat-val">100%</span>
+            <span class="eds-stat-lbl">Control de stock QR</span>
+          </div>
+        </div>
+      </div>
+      <div class="eds-hero-img-wrap">
+        <img src="assets/heroes/deposito-local.webp" alt="Depósito central de Envíos DosRuedas" class="eds-hero-img" width="560" height="420" fetchpriority="high" decoding="async">
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section class="eds-section eds-section-neutral">
+    <div class="eds-container">
+      <div class="eds-section-head">
+        <span class="eds-badge eds-badge-muted">Solución 3PL & Fulfillment</span>
+        <h2 class="eds-h2">Infraestructura urbana para tu tienda</h2>
+        <p style="max-width: 56ch; color: var(--color-brand-blue-500);">Un centro logístico en el corazón de Mar del Plata listo para recibir tus productos y despacharlos sin demoras.</p>
+      </div>
+
+      <div class="eds-grid-4">
+        <div class="double-bezel-outer">
+          <div class="double-bezel-inner">
+            <div class="eds-icon-pill">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73z"></path><path d="M12 22V12"></path></svg>
+            </div>
+            <h3 class="eds-card-title">Recepción y control QR</h3>
+            <p class="eds-card-body">Verificamos remitos y catalogamos cada bulto con código QR unívoco para trazabilidad total desde el ingreso.</p>
+          </div>
+        </div>
+
+        <div class="double-bezel-outer">
+          <div class="double-bezel-inner">
+            <div class="eds-icon-pill">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.914 4a1.5 1.5 0 00-2.474-1.561l-9 9A1.5 1.5 0 005.5 14h4.002a.5.5 0 01.471.666L8.086 20a1.5 1.5 0 002.475 1.56l9-9A1.5 1.5 0 0018.5 10h-3.997a.5.5 0 01-.472-.667z"></path></svg>
+            </div>
+            <h3 class="eds-card-title">Picking en 15 minutos</h3>
+            <p class="eds-card-body">Entra la orden por WhatsApp o web y preparamos el empaque al toque, con packaging protegido para moto.</p>
+          </div>
+        </div>
+
+        <div class="double-bezel-outer">
+          <div class="double-bezel-inner">
+            <div class="eds-icon-pill">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"></path><path d="M15 18H9"></path><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"></path></svg>
+            </div>
+            <h3 class="eds-card-title">Despacho Same Day</h3>
+            <p class="eds-card-body">Salida directa sin traslados intermedios. Llegamos en el día a cualquier punto del ejido urbano marplatense.</p>
+          </div>
+        </div>
+
+        <div class="double-bezel-outer">
+          <div class="double-bezel-inner">
+            <div class="eds-icon-pill">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18a8 8 0 0 1-4.1-1.1l-.3-.2-3 .8.8-2.9-.2-.3A8 8 0 1 1 12 20Z"></path></svg>
+            </div>
+            <h3 class="eds-card-title">Control vía WhatsApp</h3>
+            <p class="eds-card-body">Consultá stock en vivo, confirmá salidas y gestioná cobros contraentrega directamente con operadores reales en MDQ.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive Calculator Section -->
+  <section class="eds-section eds-section-blue" id="simulador">
+    <div class="eds-container">
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 48px; align-items: center;">
+        <div>
+          <span class="eds-badge eds-badge-accent">Simulador de costos</span>
+          <h2 class="eds-h2" style="color: var(--color-white);">Calculá tu inversión en <span class="eds-pill-highlight">fulfillment</span></h2>
+          <p class="eds-lead">Tarifa fija por pedido preparado y despachado. Sin contratos de permanencia ni cobros sorpresivos.</p>
+          <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 20px;">
+            <p style="font-size: 14px; color: rgba(255,255,255,0.9);">✓ Incluye custodia en Friuli 1972 con monitoreo 24 hs</p>
+            <p style="font-size: 14px; color: rgba(255,255,255,0.9);">✓ Insumos de embalaje estándar y precinto de seguridad</p>
+            <p style="font-size: 14px; color: rgba(255,255,255,0.9);">✓ Gestión de cobranza contrareembolso $0 comisión</p>
+          </div>
+        </div>
+
+        <div class="eds-calc-box">
+          <label for="slider" style="font-family: var(--font-subheading); font-size: 14px; letter-spacing: 0.1em; text-transform: uppercase; display: block;">Pedidos mensuales a despachar</label>
+          <div style="font-family: var(--font-mono); font-size: 32px; font-weight: 700; margin: 8px 0;" id="calc-count">150 bultos</div>
+          <input type="range" min="30" max="600" step="10" value="150" class="eds-slider" id="slider" aria-label="Cantidad de pedidos mensuales a despachar" aria-valuemin="30" aria-valuemax="600" aria-valuenow="150" aria-valuetext="150 bultos mensuales" oninput="updateCalc(this.value)">
+          
+          <div aria-live="polite" style="border-top: 1px solid var(--color-brand-blue-100); padding-top: 16px; margin-top: 12px;">
+            <span style="font-family: var(--font-subheading); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;">Costo operativo estimado</span>
+            <div style="font-family: var(--font-mono); font-size: 44px; font-weight: 700; color: var(--color-brand-blue-500); line-height: 1.1;" id="calc-total">$127.500 <span style="font-size: 14px; font-weight: 400;">/ mes</span></div>
+            <p style="font-family: var(--font-mono); font-size: 12px; margin-top: 4px;">Base: $850 ARS por pedido despachado.</p>
+          </div>
+
+          <a id="btn-wa" href="https://wa.me/542236602699?text=Hola!%20Manejo%20aprox%20150%20pedidos%20mensuales%20y%20quiero%20cotizar%20deposito%20en%20Friuli%201972." target="_blank" rel="noopener noreferrer" class="eds-btn eds-btn-primary" style="width: 100%; margin-top: 20px;">
+            Consultar disponibilidad de racks
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Modules -->
+  <section class="eds-section">
+    <div class="eds-container">
+      <div class="eds-section-head">
+        <span class="eds-badge eds-badge-muted">Tarifario 2026</span>
+        <h2 class="eds-h2">Módulos de espacio y preparación</h2>
+        <p style="max-width: 56ch; color: var(--color-brand-blue-500);">Elegí la escala adecuada para el momento actual de tu negocio.</p>
+      </div>
+
+      <div class="eds-grid-3">
+        <!-- Plan 1 -->
+        <div class="double-bezel-outer">
+          <div class="double-bezel-inner eds-pricing-card">
+            <span class="eds-pricing-badge">PyME Inicial</span>
+            <h3 class="eds-card-title">Módulo Estante</h3>
+            <p style="font-size: 13px; color: var(--color-brand-blue-500);">Hasta 1 m³ de stock físico</p>
+            <div class="eds-price-number">$28.000 <span class="eds-price-unit">/ mes</span></div>
+            <ul class="eds-feature-list">
+              <li>✓ Hasta 50 bultos medianos</li>
+              <li>✓ Recepción y control de remitos</li>
+              <li>✓ Picking básico en el día</li>
+              <li>✓ Salida por moto o DropOFF</li>
+            </ul>
+            <a href="https://wa.me/542236602699" class="eds-btn eds-btn-secondary-light">Elegir estante</a>
+          </div>
+        </div>
+
+        <!-- Plan 2 -->
+        <div class="double-bezel-outer" style="border-color: var(--color-brand-yellow-500);">
+          <div class="double-bezel-inner eds-pricing-card">
+            <span class="eds-pricing-badge eds-pricing-badge-featured">Más elegido e-commerce</span>
+            <h3 class="eds-card-title">Módulo Rack Pro</h3>
+            <p style="font-size: 13px; color: var(--color-brand-blue-500);">Hasta 3 m³ de stock rotativo</p>
+            <div class="eds-price-number">$58.000 <span class="eds-price-unit">/ mes</span></div>
+            <ul class="eds-feature-list">
+              <li>✓ Hasta 250 bultos rotativos</li>
+              <li>✓ Control por código QR en bulto</li>
+              <li>✓ Salida directa Flex corte 15 hs</li>
+              <li>✓ Canal exclusivo WhatsApp</li>
+            </ul>
+            <a href="https://wa.me/542236602699" class="eds-btn eds-btn-primary">Reservar rack pro</a>
+          </div>
+        </div>
+
+        <!-- Plan 3 -->
+        <div class="double-bezel-outer">
+          <div class="double-bezel-inner eds-pricing-card">
+            <span class="eds-pricing-badge">Empresas</span>
+            <h3 class="eds-card-title">Fulfillment Llave en Mano</h3>
+            <p style="font-size: 13px; color: var(--color-brand-blue-500);">Espacio exclusivo (+3 m³)</p>
+            <div class="eds-price-number">A medida</div>
+            <ul class="eds-feature-list">
+              <li>✓ Posición de pallet completo</li>
+              <li>✓ Empaque con cinta de tu marca</li>
+              <li>✓ Asignación de cadetes prioritarios</li>
+              <li>✓ Cuenta corriente quincenal</li>
+            </ul>
+            <a href="https://wa.me/542236602699" class="eds-btn eds-btn-secondary-light">Hablar con asesor</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process Steps -->
+  <section class="eds-section eds-section-neutral">
+    <div class="eds-container">
+      <div class="eds-section-head">
+        <span class="eds-badge eds-badge-muted">Flujo operativo</span>
+        <h2 class="eds-h2">Cómo funciona en 4 pasos</h2>
+      </div>
+
+      <div class="eds-steps-grid">
+        <div class="eds-step-card">
+          <span class="eds-step-num">Paso 01</span>
+          <h3 class="eds-card-title">Ingreso de stock</h3>
+          <p class="eds-card-body">Acercás tu mercadería a Friuli 1972 o coordinamos el retiro directo en tu taller.</p>
+        </div>
+        <div class="eds-step-card">
+          <span class="eds-step-num">Paso 02</span>
+          <h3 class="eds-card-title">Inventario verificado</h3>
+          <p class="eds-card-body">Catalogamos con QR y almacenamos en racks ordenados y seguros.</p>
+        </div>
+        <div class="eds-step-card">
+          <span class="eds-step-num">Paso 03</span>
+          <h3 class="eds-card-title">Avisás la venta</h3>
+          <p class="eds-card-body">Nos pasás la orden por WhatsApp y preparamos el paquete en menos de 15 minutos.</p>
+        </div>
+        <div class="eds-step-card">
+          <span class="eds-step-num">Paso 04</span>
+          <h3 class="eds-card-title">Entrega en el día</h3>
+          <p class="eds-card-body">Nuestros riders entregan en mano al cliente final en toda la ciudad.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="eds-footer">
+    <div class="eds-footer-grid">
+      <div class="eds-footer-col">
+        <h4>Envíos DosRuedas</h4>
+        <p>Base central: Friuli 1972</p>
+        <p>Mar del Plata, Argentina</p>
+        <p>Tel: +54 223 660-2699</p>
+      </div>
+      <div class="eds-footer-col">
+        <h4>Servicios</h4>
+        <a href="ui_kits/website/index.html">Envíos Express</a>
+        <a href="ui_kits/website/index.html">Envíos LowCost</a>
+        <a href="ui_kits/website/index.html">Mercado Envíos Flex</a>
+        <a href="diseno-deposito-fulfillment.html">Depósito & Fulfillment</a>
+      </div>
+      <div class="eds-footer-col">
+        <h4>Horarios</h4>
+        <p>Lunes a Viernes: 09:00 a 18:00 hs</p>
+        <p>Sábados: 10:00 a 15:00 hs</p>
+        <p>Corte Flex: 15:00 hs puntual</p>
+      </div>
+      <div class="eds-footer-col">
+        <h4>Atención directa</h4>
+        <a href="https://wa.me/542236602699" target="_blank" rel="noopener noreferrer" class="eds-btn eds-btn-primary" style="margin-top: 8px;">Chatear al toque</a>
+      </div>
+    </div>
+
+    <div class="eds-footer-bottom">
+      <span>© 2026 Envíos DosRuedas · Mar del Plata</span>
+      <span>Sistema de Diseño v2 · Tokens conformes</span>
+    </div>
+  </footer>
+
+  <script>
+    function updateCalc(val) {
+      const num = parseInt(val, 10) || 30;
+      const countEl = document.getElementById('calc-count');
+      const sliderEl = document.getElementById('slider');
+      const totalEl = document.getElementById('calc-total');
+      const btnEl = document.getElementById('btn-wa');
+      if (countEl) countEl.textContent = num + ' bultos';
+      if (sliderEl) {
+        sliderEl.setAttribute('aria-valuenow', num);
+        sliderEl.setAttribute('aria-valuetext', num + ' bultos mensuales');
+      }
+      const cost = num * 850;
+      if (totalEl) totalEl.innerHTML = '$' + cost.toLocaleString('es-AR') + ' <span style="font-size: 14px; font-weight: 400;">/ mes</span>';
+      const msg = encodeURIComponent("Hola! Manejo aprox " + num + " pedidos mensuales y quiero cotizar depósito y fulfillment en Friuli 1972.");
+      if (btnEl) btnEl.href = "https://wa.me/542236602699?text=" + msg;
+    }
+  </script>
+</body>
+</html>

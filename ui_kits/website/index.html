@@ -1,0 +1,66 @@
+<!-- @dsCard group="Website" viewport="1280x800" name="Sitio enviosdosruedas.com" subtitle="Home, Contacto y Servicio — click-through" -->
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Envíos DosRuedas — UI kit</title><meta name="description" content="Sistema de diseño y UI kit interactivo de Envíos DosRuedas · Mar del Plata"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="../../styles.css"><style>body{margin:0;background-color:var(--color-white)}:focus-visible{outline:2px solid var(--color-brand-blue-500);outline-offset:2px}</style></head><body>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script><script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script><script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script><script src="../../_ds_bundle.js"></script><div id="root"></div>
+<script type="text/babel" src="shared.jsx"></script>
+<script type="text/babel" src="HomeScreen.jsx"></script>
+<script type="text/babel" src="ContactoScreen.jsx"></script>
+<script type="text/babel" src="ServicioScreen.jsx"></script>
+<script type="text/babel" src="EmprendedoresScreen.jsx"></script>
+<script type="text/babel" src="FaqScreen.jsx"></script>
+<script type="text/babel" src="NosotrosScreen.jsx"></script>
+<script type="text/babel" src="RedesScreen.jsx"></script>
+<script type="text/babel" src="EmpresasScreen.jsx"></script>
+<script type="text/babel" src="ContrareembolsoScreen.jsx"></script>
+<script type="text/babel" src="DepositoFulfillmentScreen.jsx"></script>
+<script type="text/babel">
+const ROUTES={home:["home"],contacto:["contacto"],express:["servicio","express"],lowcost:["servicio","lowcost"],flex:["servicio","flex"],deposito:["deposito"],emprendedores:["emprendedores"],empresas:["empresas"],contra:["contra"],faq:["faq"],nosotros:["nosotros"],redes:["redes"]};
+const TITLES={home:"Inicio",contacto:"Contacto y Cotización",express:"Envíos Express",lowcost:"Envíos LowCost",flex:"Mercado Envíos Flex",deposito:"Depósito y Fulfillment",emprendedores:"Plan Emprendedores",empresas:"Empresas y Cuentas Corrientes",contra:"Cobro Contrareembolso",faq:"Preguntas Frecuentes",nosotros:"Sobre Nosotros",redes:"Comunidad y Redes"};
+const LABELS=[[/^Inicio$/,"home"],[/Todos los Servicios|Express/,"express"],[/LowCost/,"lowcost"],[/Flex/,"flex"],[/Cobro/,"contra"],[/Cuenta Corriente|Cuenta corriente/,"empresas"],[/Depósito|Fulfillment/,"deposito"],[/E-commerce|Emprendedores|Cotizador/,"emprendedores"],[/Sobre Nosotros|Cobertura/,"nosotros"],[/Preguntas/,"faq"],[/Redes/,"redes"],[/Contacto|Cotiz|Privacidad|Términos/,"contacto"],[/Servicios/,"express"]];
+function App(){
+  const [route,setRoute]=React.useState(()=>{const r=localStorage.getItem('eds-route');return ROUTES[r]?r:'home'});
+  const [compact,setCompact]=React.useState(false);
+
+  React.useEffect(()=>{
+    localStorage.setItem('eds-route',route);
+    document.title = (TITLES[route] || 'UI Kit') + " — Envíos DosRuedas";
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  },[route]);
+
+  React.useEffect(()=>{
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const next = window.scrollY > 20;
+          setCompact(prev => prev !== next ? next : prev);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  },[]);
+
+  const go = React.useCallback((r) => setRoute(ROUTES[r] ? r : 'home'), []);
+  const onCta = React.useCallback(() => go('contacto'), [go]);
+  const nav = React.useCallback((item) => {
+    const l = item.label || '';
+    const m = LABELS.find(([re]) => re.test(l));
+    go(m ? m[1] : 'home');
+  }, [go]);
+
+  const [kind,svc]=ROUTES[route];
+  const props = React.useMemo(() => ({ go, service: svc }), [go, svc]);
+  const Screen = {home:HomeScreen,contacto:ContactoScreen,servicio:ServicioScreen,deposito:DepositoFulfillmentScreen,emprendedores:EmprendedoresScreen,empresas:EmpresasScreen,contra:ContrareembolsoScreen,faq:FaqScreen,nosotros:NosotrosScreen,redes:RedesScreen}[kind];
+  const screenContent = React.useMemo(() => <Screen {...props}/>, [kind, props]);
+
+  return <>
+    <SkipLink href="#main" />
+    <SiteHeader logoSrc="../../assets/logo-envios-simplified.webp" compact={compact} onNavigate={nav} onCta={onCta} />
+    <main id="main" tabIndex={-1} aria-live="polite">{screenContent}</main>
+    <SiteFooter onNavigate={nav} onCta={onCta} social={<Social/>}/>
+  </>;
+}
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script></body></html>

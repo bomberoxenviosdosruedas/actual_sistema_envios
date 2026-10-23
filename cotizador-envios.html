@@ -1,0 +1,426 @@
+<title>Cotizador Envíos DosRuedas</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Geist+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.17"></script>
+<script>
+  tailwind.config = {
+    darkMode: ['selector', '[data-theme="dark"]'],
+    theme: {
+      extend: {
+        colors: {
+          brand: {
+            blue: {
+              50: '#E6EEFE',
+              100: '#BACEFD',
+              200: '#8EAFFB',
+              300: '#628FF9',
+              400: '#3570F8',
+              500: '#0950F6',
+            },
+            yellow: {
+              50: '#FFFDE6',
+              100: '#FFFAB8',
+              200: '#FFF78A',
+              300: '#FFF45C',
+              400: '#FFF12E',
+              500: '#FFEC01',
+              600: '#E6D400',
+            }
+          }
+        },
+        fontFamily: {
+          display: ['Anton', 'Impact', 'sans-serif'],
+          subheading: ['"Bebas Neue"', 'Impact', 'sans-serif'],
+          sans: ['Outfit', 'sans-serif'],
+          mono: ['"Geist Mono"', 'monospace'],
+        }
+      }
+    }
+  }
+</script>
+<style>
+  :root {
+    --bg: #FFFFFF;
+    --fg: #0950F6;
+    --surface-card: #FFFFFF;
+    --surface-muted: #E6EEFE;
+    --border-subtle: #BACEFD;
+    --border-strong: #0950F6;
+    --accent: #FFEC01;
+    --shadow-float: 0 25px 50px -12px rgba(9, 80, 246, 0.15);
+    --shadow-deep: 0 24px 64px rgba(9, 80, 246, 0.22);
+    --shadow-cta: 0 0 28px rgba(255, 236, 1, 0.45), 0 8px 24px rgba(9, 80, 246, 0.18);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #041F63;
+      --fg: #FFFFFF;
+      --surface-card: #0950F6;
+      --surface-muted: rgba(255, 255, 255, 0.08);
+      --border-subtle: rgba(255, 255, 255, 0.2);
+      --border-strong: #FFEC01;
+      --accent: #FFEC01;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #041F63;
+    --fg: #FFFFFF;
+    --surface-card: #0950F6;
+    --surface-muted: rgba(255, 255, 255, 0.08);
+    --border-subtle: rgba(255, 255, 255, 0.2);
+    --border-strong: #FFEC01;
+    --accent: #FFEC01;
+    color-scheme: dark;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--fg);
+    font-family: 'Outfit', sans-serif;
+    padding-left: max(16px, env(safe-area-inset-left, 0px));
+    padding-right: max(16px, env(safe-area-inset-right, 0px));
+    margin: 0;
+  }
+
+  .double-bezel {
+    background: var(--surface-muted);
+    border: 1px solid var(--border-subtle);
+    border-radius: 1.5rem;
+    padding: 0.75rem;
+    box-shadow: var(--shadow-float);
+    transition: all 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+  }
+  .double-bezel:hover {
+    border-color: var(--border-strong);
+    box-shadow: var(--shadow-deep);
+  }
+  .bezel-inner {
+    background: var(--surface-card);
+    border-radius: 1rem;
+    padding: 1.5rem;
+  }
+
+  .cta-pill {
+    background: #FFEC01;
+    color: #0950F6;
+    border-radius: 9999px;
+    font-family: 'Bebas Neue', Impact, sans-serif;
+    letter-spacing: 0.05em;
+    font-size: 1.25rem;
+    padding: 0.75rem 2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    box-shadow: var(--shadow-cta);
+    transition: transform 0.25s ease, background-color 0.25s ease;
+    cursor: pointer;
+    border: none;
+    font-weight: 400;
+  }
+  .cta-pill:hover {
+    background: #FFF12E;
+    transform: translateY(-2px);
+  }
+  .cta-pill:active {
+    transform: translateY(1px) scale(0.98);
+  }
+
+  .service-card {
+    border: 2px solid var(--border-subtle);
+    border-radius: 1rem;
+    padding: 1.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: var(--surface-card);
+  }
+  .service-card.active {
+    border-color: #FFEC01;
+    background: rgba(255, 236, 1, 0.08);
+    box-shadow: 0 0 20px rgba(255, 236, 1, 0.2);
+  }
+  .service-card:hover {
+    border-color: #628FF9;
+  }
+</style>
+
+<div class="max-w-6xl mx-auto py-8 md:py-12">
+  <!-- Header / Hero -->
+  <div class="text-center mb-10">
+    <div class="inline-block bg-[#FFEC01] text-[#0950F6] px-4 py-1 rounded-full font-subheading tracking-wider text-sm mb-3 shadow-sm transform -rotate-1">
+      INFRAESTRUCTURA URBANA MAR DEL PLATA
+    </div>
+    <h1 class="font-display uppercase text-4xl md:text-6xl tracking-tight leading-[0.92] mb-4">
+      Cotizador <span class="bg-[#FFEC01] text-[#0950F6] px-2 rounded">Instantáneo</span>
+    </h1>
+    <p class="text-base md:text-lg opacity-90 max-w-2xl mx-auto font-sans">
+      Calculá tu envío en moto o e-commerce al instante. Tarifas transparentes, tiempos reales y seguimiento en vivo.
+    </p>
+  </div>
+
+  <!-- Main Grid Container -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+
+    <!-- Left Column: Form & Services -->
+    <div class="lg:col-span-7 space-y-6">
+
+      <!-- Service Selection -->
+      <div class="double-bezel">
+        <div class="bezel-inner space-y-4">
+          <h2 class="font-subheading text-2xl tracking-wide text-[#0950F6] dark:text-[#FFEC01] flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#FFEC01] inline-block"></span>
+            1. Seleccioná el Servicio
+          </h2>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3" id="serviceOptions">
+            <div class="service-card active" data-service="flex" data-base="1800" data-time="2 a 3 horas">
+              <div class="flex justify-between items-start mb-1">
+                <span class="font-subheading text-xl tracking-wide">Envíos Flex</span>
+                <span class="bg-[#0950F6] text-white text-xs px-2 py-0.5 rounded font-mono">24h E-commerce</span>
+              </div>
+              <p class="text-xs opacity-80 mb-2">Ideal tiendas online con entregas diarias en toda la ciudad.</p>
+              <div class="font-mono text-sm font-semibold text-[#0950F6] dark:text-[#FFEC01]">Desde $1.800 / pqt</div>
+            </div>
+
+            <div class="service-card" data-service="express" data-base="3200" data-time="Inmediato (45m)">
+              <div class="flex justify-between items-start mb-1">
+                <span class="font-subheading text-xl tracking-wide">Envío Express</span>
+                <span class="bg-[#FFEC01] text-[#0950F6] text-xs px-2 py-0.5 rounded font-mono font-semibold">Moto Dedicada</span>
+              </div>
+              <p class="text-xs opacity-80 mb-2">Retiro y entrega directa sin escalas ni demoras.</p>
+              <div class="font-mono text-sm font-semibold text-[#0950F6] dark:text-[#FFEC01]">Desde $3.200</div>
+            </div>
+
+            <div class="service-card" data-service="lowcost" data-base="1400" data-time="Programado">
+              <div class="flex justify-between items-start mb-1">
+                <span class="font-subheading text-xl tracking-wide">LowCost</span>
+                <span class="bg-blue-100 text-[#0950F6] text-xs px-2 py-0.5 rounded font-mono">Económico</span>
+              </div>
+              <p class="text-xs opacity-80 mb-2">Para envíos programados con franja horaria amplia.</p>
+              <div class="font-mono text-sm font-semibold text-[#0950F6] dark:text-[#FFEC01]">Desde $1.400</div>
+            </div>
+
+            <div class="service-card" data-service="fulfillment" data-base="2500" data-time="Depósito 24/7">
+              <div class="flex justify-between items-start mb-1">
+                <span class="font-subheading text-xl tracking-wide">Fulfillment</span>
+                <span class="bg-yellow-100 text-[#0950F6] text-xs px-2 py-0.5 rounded font-mono">Logística Integral</span>
+              </div>
+              <p class="text-xs opacity-80 mb-2">Almacenamiento, preparación de pedidos y despacho.</p>
+              <div class="font-mono text-sm font-semibold text-[#0950F6] dark:text-[#FFEC01]">Cotización a medida</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Route & Details Form -->
+      <div class="double-bezel">
+        <div class="bezel-inner space-y-4">
+          <h2 class="font-subheading text-2xl tracking-wide text-[#0950F6] dark:text-[#FFEC01] flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-[#FFEC01] inline-block"></span>
+            2. Detalles de la Ruta y Bultos
+          </h2>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block font-subheading tracking-wider text-sm mb-1">Zona de Retiro (Origen)</label>
+              <select id="originZone" class="w-full bg-slate-50 dark:bg-blue-900 border-2 border-[#BACEFD] rounded-xl px-3 py-2.5 text-sm font-sans focus:outline-none focus:border-[#0950F6]">
+                <option value="centro">Centro / La Perla (Base)</option>
+                <option value="zona- norte">Zona Norte (Constitución / Camet)</option>
+                <option value="zona-sur">Zona Sur (Punta Mogotes / Alfar)</option>
+                <option value="puerto">Puerto / Juan B. Justo</option>
+              </select>
+            </div>
+
+            <div>
+              <label class="block font-subheading tracking-wider text-sm mb-1">Zona de Entrega (Destino)</label>
+              <select id="destZone" class="w-full bg-slate-50 dark:bg-blue-900 border-2 border-[#BACEFD] rounded-xl px-3 py-2.5 text-sm font-sans focus:outline-none focus:border-[#0950F6]">
+                <option value="centro">Microcentro / Centro</option>
+                <option value="norte">Zona Norte / Constitución</option>
+                <option value="sur">Zona Sur / Alfar / Mogotes</option>
+                <option value="camino">Camino a Miramar / Parque Industrial</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+            <div>
+              <label class="block font-subheading tracking-wider text-sm mb-1">Cantidad de Paquetes / Bultos</label>
+              <div class="flex items-center gap-2">
+                <button type="button" id="btnMinus" class="w-11 h-11 rounded-xl bg-blue-100 text-[#0950F6] font-bold text-lg flex items-center justify-center hover:bg-blue-200 transition">-</button>
+                <input type="number" id="pkgCount" value="1" min="1" max="100" class="w-full text-center bg-slate-50 dark:bg-blue-900 border-2 border-[#BACEFD] rounded-xl py-2.5 font-mono text-lg font-semibold focus:outline-none focus:border-[#0950F6]">
+                <button type="button" id="btnPlus" class="w-11 h-11 rounded-xl bg-blue-100 text-[#0950F6] font-bold text-lg flex items-center justify-center hover:bg-blue-200 transition">+</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="block font-subheading tracking-wider text-sm mb-1">Peso Aproximado Total</label>
+              <select id="weightRange" class="w-full bg-slate-50 dark:bg-blue-900 border-2 border-[#BACEFD] rounded-xl px-3 py-2.5 text-sm font-sans focus:outline-none focus:border-[#0950F6]">
+                <option value="1">Hasta 5 kg (Moto estándar)</option>
+                <option value="1.2">5 kg a 15 kg (Mochila grande)</option>
+                <option value="1.5">Más de 15 kg (Vehículo utilitario)</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Right Column: Live Summary / Result Card -->
+    <div class="lg:col-span-5">
+      <div class="double-bezel sticky top-6">
+        <div class="bezel-inner space-y-6">
+          <div class="border-b border-[#BACEFD] pb-4 flex justify-between items-center">
+            <div>
+              <span class="bg-[#FFEC01] text-[#0950F6] text-xs px-2.5 py-1 rounded-full font-subheading tracking-wider">COTIZACIÓN EN VIVO</span>
+              <h3 class="font-subheading text-2xl tracking-wide mt-2">Resumen de Envío</h3>
+            </div>
+            <div class="text-right">
+              <div class="text-xs opacity-70">Tiempo estimado</div>
+              <div id="estTime" class="font-mono font-semibold text-sm text-[#0950F6] dark:text-[#FFEC01]">2 a 3 horas</div>
+            </div>
+          </div>
+
+          <!-- Breakdown list -->
+          <div class="space-y-3 text-sm font-sans">
+            <div class="flex justify-between">
+              <span class="opacity-80">Servicio seleccionado:</span>
+              <span id="summaryService" class="font-semibold uppercase font-mono text-xs bg-blue-100 text-[#0950F6] px-2 py-0.5 rounded">Envíos Flex</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="opacity-80">Origen → Destino:</span>
+              <span id="summaryRoute" class="font-semibold">Centro → Centro</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="opacity-80">Cantidad de bultos:</span>
+              <span id="summaryQty" class="font-mono font-semibold">1 paquete</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="opacity-80">Recargo por zona/peso:</span>
+              <span id="summaryExtra" class="font-mono font-semibold">$0</span>
+            </div>
+          </div>
+
+          <!-- Total price box -->
+          <div class="bg-blue-900 text-white dark:bg-black/40 p-5 rounded-2xl flex items-center justify-between shadow-inner">
+            <div>
+              <div class="text-xs text-blue-200 tracking-wider font-subheading">TOTAL ESTIMADO</div>
+              <div class="text-xs opacity-75">Incluye seguro básico de traslado</div>
+            </div>
+            <div id="totalPrice" class="font-mono text-3xl md:text-4xl font-bold text-[#FFEC01]">
+              $1.800
+            </div>
+          </div>
+
+          <!-- CTA Button -->
+          <button type="button" class="cta-pill w-full text-center flex items-center justify-center gap-2 group">
+            <span>SOLICITAR MOTO AHORA</span>
+            <div class="w-8 h-8 rounded-full bg-[#0950F6]/10 flex items-center justify-center text-[#0950F6] transition-transform group-hover:translate-x-1">
+              →
+            </div>
+          </button>
+
+          <div class="text-center">
+            <a href="https://wa.me/5492230000000" target="_blank" class="text-xs font-sans opacity-80 hover:underline inline-flex items-center gap-1">
+              💬 ¿Tenés dudas o necesitás cotización corporativa? Hablá con asesor por WhatsApp
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Interactive Calculator Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    let currentServiceBase = 1800;
+    let currentServiceName = "Envíos Flex";
+    let currentEstTime = "2 a 3 horas";
+
+    const serviceCards = document.querySelectorAll('.service-card');
+    const originZone = document.getElementById('originZone');
+    const destZone = document.getElementById('destZone');
+    const pkgCount = document.getElementById('pkgCount');
+    const weightRange = document.getElementById('weightRange');
+
+    const summaryService = document.getElementById('summaryService');
+    const summaryRoute = document.getElementById('summaryRoute');
+    const summaryQty = document.getElementById('summaryQty');
+    const summaryExtra = document.getElementById('summaryExtra');
+    const estTime = document.getElementById('estTime');
+    const totalPrice = document.getElementById('totalPrice');
+
+    const btnMinus = document.getElementById('btnMinus');
+    const btnPlus = document.getElementById('btnPlus');
+
+    btnMinus.addEventListener('click', () => {
+      let val = parseInt(pkgCount.value) || 1;
+      if (val > 1) {
+        pkgCount.value = val - 1;
+        calculate();
+      }
+    });
+
+    btnPlus.addEventListener('click', () => {
+      let val = parseInt(pkgCount.value) || 1;
+      if (val < 100) {
+        pkgCount.value = val + 1;
+        calculate();
+      }
+    });
+
+    serviceCards.forEach(card => {
+      card.addEventListener('click', () => {
+        serviceCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+        currentServiceBase = parseInt(card.getAttribute('data-base')) || 1800;
+        currentServiceName = card.querySelector('.font-subheading').textContent;
+        currentEstTime = card.getAttribute('data-time');
+        summaryService.textContent = currentServiceName;
+        estTime.textContent = currentEstTime;
+        calculate();
+      });
+    });
+
+    [originZone, destZone, pkgCount, weightRange].forEach(el => {
+      el.addEventListener('input', calculate);
+      el.addEventListener('change', calculate);
+    });
+
+    function calculate() {
+      let base = currentServiceBase;
+      let qty = parseInt(pkgCount.value) || 1;
+      let weightMultiplier = parseFloat(weightRange.value) || 1;
+
+      let zoneMultiplier = 1.0;
+      if (destZone.value === 'sur' || destZone.value === 'camino') {
+        zoneMultiplier = 1.25;
+      } else if (destZone.value === 'norte') {
+        zoneMultiplier = 1.15;
+      }
+
+      // Calculation formula
+      let calculated = Math.round((base * zoneMultiplier * weightMultiplier) + ((qty - 1) * (base * 0.6)));
+      if (currentServiceName.includes('Fulfillment')) {
+        totalPrice.textContent = "A medida";
+        summaryExtra.textContent = "Plan corporativo";
+      } else {
+        totalPrice.textContent = "$" + calculated.toLocaleString('es-AR');
+        let extra = calculated - base;
+        summaryExtra.textContent = extra > 0 ? "+$" + extra.toLocaleString('es-AR') : "$0";
+      }
+
+      summaryRoute.textContent = originZone.options[originZone.selectedIndex].text.split(' ')[0] + " → " + destZone.options[destZone.selectedIndex].text.split(' ')[0];
+      summaryQty.textContent = qty + (qty === 1 ? " paquete" : " paquetes");
+    }
+
+    calculate();
+  });
+</script>

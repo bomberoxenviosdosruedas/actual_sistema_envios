@@ -24,16 +24,23 @@
 --color-social-whatsapp:#25d366;
 --color-social-facebook:#1877f2; /* no usar como fondo con texto blanco: 4.23:1 */
 --color-social-instagram:#e1306c;
-/* Roles semánticos */
+
+/* Jerarquía de texto (fix crítico: opacidad sobre azul-500, no gris neutro) */
+--text-primary:var(--color-brand-blue-500);
+--text-secondary:rgba(9,80,246,0.65);   /* 65% — descriptions, leads */
+--text-tertiary:rgba(9,80,246,0.45);    /* 45% — metadata, captions, timestamps */
+--text-disabled:rgba(9,80,246,0.30);    /* 30% — estados deshabilitados */
+
+/* Roles semánticos (light theme) */
 --surface-page:var(--color-white);
 --surface-card:var(--color-white);
 --surface-muted:var(--color-brand-blue-50);
 --surface-invert:var(--color-brand-blue-500);
 --surface-accent:var(--color-brand-yellow-500);
 --surface-glass:rgba(255,255,255,.08);
---text-body:var(--color-brand-blue-500);
---text-muted:var(--color-brand-blue-500); /* sin azul más oscuro ni más claro apto; usar opacidad de contenedor, nunca de texto */
---text-heading:var(--color-brand-blue-500);
+--text-body:var(--text-primary);
+--text-muted:var(--text-tertiary);        /* era blue-500; ahora 45% para jerarquía real */
+--text-heading:var(--text-primary);
 --text-on-invert:var(--color-white);
 --text-on-accent:var(--color-brand-blue-500); /* 4.94:1 sobre amarillo */
 --text-on-invert-muted:rgba(255,255,255,.85);
@@ -46,4 +53,44 @@
 --action-primary-hover:var(--color-brand-yellow-400);
 --action-secondary:var(--color-brand-blue-500);
 --action-secondary-hover:var(--color-brand-blue-50);
+
+/* === DARK THEME SKELETON (fix crítico: tokens base + color-scheme) === */
+--surface-page-dark:#0a0f1a;
+--surface-card-dark:#101828;
+--surface-muted-dark:#151e2e;
+--surface-invert-dark:var(--color-white);
+--surface-accent-dark:var(--color-brand-yellow-500);
+--surface-glass-dark:rgba(255,255,255,.06);
+--text-body-dark:#e8edf5;
+--text-muted-dark:rgba(232,237,245,0.55);
+--text-heading-dark:#ffffff;
+--text-on-invert-dark:var(--color-brand-blue-500);
+--text-on-accent-dark:var(--color-brand-blue-500);
+--border-subtle-dark:rgba(142,175,251,0.15);
+--border-strong-dark:var(--color-brand-blue-500);
+--focus-ring-dark:var(--color-brand-yellow-500);
+--action-primary-dark:var(--color-brand-yellow-500);
+--action-secondary-dark:var(--color-white);
+--shadow-elevated-dark:0 16px 40px rgba(0,0,0,0.4);
+--shadow-float-dark:0 25px 50px -12px rgba(0,0,0,0.35);
+}
+
+/* Dark theme activation via data attribute */
+[data-theme="dark"] {
+  --surface-page:var(--surface-page-dark);
+  --surface-card:var(--surface-card-dark);
+  --surface-muted:var(--surface-muted-dark);
+  --surface-invert:var(--surface-invert-dark);
+  --surface-accent:var(--surface-accent-dark);
+  --surface-glass:var(--surface-glass-dark);
+  --text-body:var(--text-body-dark);
+  --text-muted:var(--text-muted-dark);
+  --text-heading:var(--text-heading-dark);
+  --text-on-invert:var(--text-on-invert-dark);
+  --text-on-accent:var(--text-on-accent-dark);
+  --border-subtle:var(--border-subtle-dark);
+  --border-strong:var(--border-strong-dark);
+  --focus-ring:var(--focus-ring-dark);
+  --action-primary:var(--action-primary-dark);
+  --action-secondary:var(--action-secondary-dark);
 }

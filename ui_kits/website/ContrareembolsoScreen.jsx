@@ -7,12 +7,22 @@ function ContrareembolsoScreen({ go }) {
       <Badge icon={<Icon d={ICONS.shield} />}>Cobranzas seguras en Mar del Plata</Badge>
       <H1>Envíos con <Mark>cobro en destino</Mark></H1>
       <Lead invert>Vendé más en Mar del Plata brindándole a tus clientes la tranquilidad de pagar al recibir el paquete. Cobramos en efectivo o transferencia y te rendimos el dinero en el día, al día siguiente o semanal, según lo acordado.</Lead>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}><Button size="lg" external href="https://wa.me/542236602699">Pedí por WhatsApp</Button><Button variant="secondary" surface="dark" size="lg" onClick={() => go("contacto")}>Cotizá tu envío</Button></div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
+        <WhatsAppCTA service="contrareembolso" size="lg" variant="primary">Pedí por WhatsApp</WhatsAppCTA>
+        <Button variant="secondary" surface="dark" size="lg" onClick={() => go("contacto")}>Cotizá tu envío</Button>
+      </div>
       <StatList invert items={[["Acordada", "rendición"], ["2", "efectivo y transferencia"], ["100%", "flota propia verificada"]]} />
     </Hero>
     <Section><SectionHead eyebrow="Cómo funciona" title="Paso a paso simple y transparente" lead="Diseñado para que cobres rápido y sin preocupaciones en cada rincón de Mar del Plata." /><Steps items={[{ title: "Retiramos tu pedido", body: "Pasamos a buscar el paquete por tu local, taller o domicilio en Mar del Plata con remito de entrega." }, { title: "Cobramos en destino", body: "Entregamos al comprador y cobramos el monto exacto en efectivo o mediante transferencia bancaria al instante." }, { title: "Rendición acordada", body: "Te transferimos la recaudación a tu CBU/CVU o te entregamos el efectivo en mano con comprobante firmado, en el día, al día siguiente o semanal, según lo acordado." }]} /></Section>
     <Section bg="var(--color-brand-blue-50)"><SectionHead eyebrow="Confianza total" title="Por qué elegir nuestro cobro en destino" lead="Más de 7 años recorriendo Mar del Plata garantizan seguridad y puntualidad." /><Grid min={240}>{[["Rendición acordada", "El dinero de tus ventas no queda retenido semanas. Te transferimos o rendimos en mano en el día, al día siguiente o semanal, según lo acordado.", "clock"], ["Flota propia identificada", "Nuestros cadetes están capacitados y registrados. Sin intermediarios anónimos custodiando tus cobranzas.", "shield"], ["Cero fricción para tu cliente", "Tu comprador paga recién cuando tiene el producto en sus manos, aumentando tus conversiones de venta en MDQ.", "heart"], ["Comprobante y trazabilidad", "Notificación inmediata vía WhatsApp apenas se efectiviza la cobranza con foto del remito o comprobante bancario.", "file"]].map(([t, b, ic]) => <FeatureCard key={t} icon={<Icon d={ICONS[ic]} size={20} />} title={t} body={b} />)}</Grid></Section>
-    <CtaBanner title="¿Querés empezar a cobrar en destino hoy?" lead="Escribinos por WhatsApp y coordinamos tu primer retiro contra reembolso en minutos. Sin contratos forzosos ni comisiones ocultas." actions={<Button size="lg" external href="https://wa.me/542236602699" variant="primary">Pedí por WhatsApp</Button>} />
+
+    {/* NUEVO: Tabla comparativa - destacar express (relacionado con contrareembolso) */}
+    <Section bg="var(--color-white)">
+      <SectionHead eyebrow="Compará opciones" title="Servicios con cobro en destino" lead="El contrareembolso se puede combinar con Express o LowCost según tu necesidad." />
+      <ComparisonTable highlightedService="express" />
+    </Section>
+
+    <CtaBanner title="¿Querés empezar a cobrar en destino hoy?" lead="Escribinos por WhatsApp y coordinamos tu primer retiro contra reembolso en minutos. Sin contratos forzosos ni comisiones ocultas." actions={<WhatsAppCTA service="contrareembolso" size="lg" variant="primary">Pedí por WhatsApp</WhatsAppCTA>} />
     <SocialBand />
   </>;
 }

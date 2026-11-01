@@ -1,7 +1,15 @@
 /* Reset mínimo equivalente al body de los HTML: bg-white text-brand-blue-500 font-sans antialiased selection:bg-brand-yellow-500 */
+/* color-scheme en :root habilita scrollbars/inputs nativos oscuros cuando [data-theme="dark"] */
+:root{color-scheme:light}
+[data-theme="dark"]{color-scheme:dark}
+
 body{margin:0;background:var(--surface-page);color:var(--text-body);font-family:var(--font-sans);-webkit-font-smoothing:antialiased;line-height:1.5}
 ::selection{background:var(--color-brand-yellow-500);color:var(--color-brand-blue-500)}
 a{color:inherit;text-decoration:inherit}
 a:hover{color:var(--color-brand-blue-500)}
 svg.lucide{fill:none;stroke:currentColor;stroke-width:2px;stroke-linecap:round;stroke-linejoin:round;width:24px;height:24px}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap;border:0}
+
+/* Meta theme-color para PWA/mobile address bar (light/dark) */
+/* Incluir en <head>: <meta name="theme-color" content="#0950F6" media="(prefers-color-scheme: light)">
+ *                      <meta name="theme-color" content="#0a0f1a" media="(prefers-color-scheme: dark)"> */

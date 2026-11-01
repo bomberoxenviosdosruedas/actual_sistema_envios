@@ -2,6 +2,8 @@ function DepositoFulfillmentScreen({ go }) {
   const [bultos, setBultos] = React.useState(150);
   const costPerOrder = 850;
   const total = React.useMemo(() => bultos * costPerOrder, [bultos]);
+
+  // Usar SimpleQuoteCalculator para fulfillment
   const waLink = React.useMemo(() => (
     "https://wa.me/542236602699?text=" + encodeURIComponent("Hola! Tengo un e-commerce con aprox. " + bultos + " pedidos mensuales y me interesa el servicio de depósito y fulfillment en Friuli 1972.")
   ), [bultos]);
@@ -12,7 +14,7 @@ function DepositoFulfillmentScreen({ go }) {
       <H1 color="var(--color-white)">Almacená en Mar del Plata, <span style={{ display: "inline-block", background: "var(--color-brand-yellow-500)", color: "var(--color-brand-blue-500)", borderRadius: 999, padding: "0 .3em", transform: "rotate(-1deg)", lineHeight: 1.1 }}>vendé sin frenar</span></H1>
       <Lead invert>Almacenamiento de stock, control de inventario con QR, picking y empaque en 15 minutos con despacho en el día a toda la ciudad.</Lead>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
-        <Button variant="primary" size="lg" onClick={() => go("contacto")}>Cotizá tu depósito</Button>
+        <WhatsAppCTA service="deposito" size="lg" variant="primary">Cotizá tu depósito</WhatsAppCTA>
         <Button variant="secondary" surface="dark" size="lg" href="#simulador">Calculá tu costo</Button>
       </div>
       <StatList invert items={[["Friuli 1972", "base operativa"], ["15 min", "picking & despacho"], ["100%", "control de stock"]]} />
@@ -28,6 +30,12 @@ function DepositoFulfillmentScreen({ go }) {
           ["Reportes de stock vía WhatsApp", "Consultá tus existencias, movimientos y alertas de reposición al instante sin paneles complicados.", "wa", "En vivo"]
         ].map(([t, b, ic, tag]) => <FeatureCard key={t} icon={<Icon d={ICONS[ic]} size={20} />} tag={tag} title={t} body={b} />)}
       </Grid>
+    </Section>
+
+    {/* NUEVO: Tabla comparativa - destacar deposito */}
+    <Section bg="var(--color-white)">
+      <SectionHead eyebrow="Compará opciones" title="Servicios de depósito y envío" lead="Desde LowCost hasta Fulfillment 3PL integral, encontrá la modalidad que escala con tu negocio." />
+      <ComparisonTable highlightedService="deposito" />
     </Section>
 
     <Section bg="var(--color-brand-blue-500)" style={{ color: "var(--color-white)" }}>
@@ -69,9 +77,9 @@ function DepositoFulfillmentScreen({ go }) {
               </div>
               <p style={{ margin: "4px 0 0", font: "400 12px/1.4 var(--font-mono)" }}>Aprox. ${costPerOrder.toLocaleString("es-AR")} por pedido preparado y despachado.</p>
             </div>
-            <Button fullWidth external href={waLink}>
+            <WhatsAppCTA service="deposito" fullWidth shipments={bultos}>
               Consultar disponibilidad de espacio
-            </Button>
+            </WhatsAppCTA>
           </div>
         </BezelCard>
       </div>
@@ -151,7 +159,7 @@ function DepositoFulfillmentScreen({ go }) {
       </div>
     </Section>
 
-    <CtaForm title="¿Querés delegar el depósito y despacho de tu tienda?" lead="Ahorrá horas de empaque y logística. Hablá hoy con nuestro equipo operativo en Mar del Plata." />
+    <CtaForm title="¿Querés delegar el depósito y despacho de tu tienda?" lead="Ahorrá horas de empaque y logística. Hablá hoy con nuestro equipo operativo en Mar del Plata." service="deposito" />
     <SocialBand />
   </>;
 }

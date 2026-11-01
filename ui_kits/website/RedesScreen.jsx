@@ -14,7 +14,7 @@ function RedesScreen({ go }) {
       <SectionHead invert eyebrow="En vivo" title="Publicaciones recientes" lead="Lo que está pasando ahora mismo en nuestras redes sociales oficiales de Mar del Plata." />
       <Grid min={260}>{POSTS.map(([img, who, date, text, net], k) => <SocialCard key={k} kind="post" tone="dark" image={A(img)} title={who} date={date} body={text} cta={"Ver original en " + net} />)}</Grid>
     </Section>
-    <CtaForm />
+    <CtaForm service="general" />
   </>;
 }
 window.RedesScreen = RedesScreen;

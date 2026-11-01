@@ -22,12 +22,27 @@ const SERV = {
 function ServicioScreen({ go, service = "express" }) {
   const s = SERV[service] || SERV.express;
   const yel = s.yellow; const ink = "var(--color-brand-blue-500)";
+
+  // Mapeo de service key para WhatsAppCTA
+  const waServiceMap = {
+    express: "express",
+    lowcost: "lowcost",
+    flex: "flex",
+    deposito: "deposito",
+  };
+  const waService = waServiceMap[service] || "general";
+
   return <>
     <Hero yellow={yel} aside={<img src={A(s.img)} alt={s.alt} fetchPriority="high" decoding="async" style={{ width: "100%", maxWidth: 480, justifySelf: "center", borderRadius: "var(--radius-card)" }} />}>
       <Badge tone={yel ? "invert" : "accent"} icon={<Icon d={ICONS[s.icon]} />}>{s.badge}</Badge>
       <H1 color={yel ? ink : "var(--color-white)"}>{s.h1[0]} <span style={{ display: "inline-block", background: yel ? ink : "var(--color-brand-yellow-500)", color: yel ? "var(--color-brand-yellow-500)" : ink, borderRadius: 999, padding: "0 .3em", transform: "rotate(-1deg)", lineHeight: 1.1 }}>{s.h1[1]}</span></H1>
       <Lead invert={!yel}>{s.lead}</Lead>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}><Button variant={yel ? "social" : "primary"} size="lg" onClick={() => go("contacto")}>Cotizá {s.badge.replace("Envíos ", "").replace("Mercado ", "")}</Button><Button variant="secondary" surface={yel ? "light" : "dark"} size="lg" onClick={() => go("home")}>Todos los servicios</Button></div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16 }}>
+        <WhatsAppCTA service={waService} size="lg" variant={yel ? "social" : "primary"}>
+          Cotizá {s.badge.replace("Envíos ", "").replace("Mercado ", "")}
+        </WhatsAppCTA>
+        <Button variant="secondary" surface={yel ? "light" : "dark"} size="lg" onClick={() => go("home")}>Todos los servicios</Button>
+      </div>
       <StatList invert={!yel} items={s.stats} />
     </Hero>
     <Section bg="var(--color-neutral-50)">
@@ -38,12 +53,19 @@ function ServicioScreen({ go, service = "express" }) {
       <SectionHead eyebrow={s.pricingTag} title={s.pricingTitle} lead="Tarifa fija según los kilómetros exactos entre retiro y entrega. Sabés el precio antes de pedir." />
       <Grid min={s.prices.length > 3 ? 220 : 260} gap={24} style={{ paddingTop: 12 }}>{s.prices.map((p, k) => <PricingCard key={p[0]} title={p[0]} range={p[1]} price={p[2]} unit={s.unit} features={p[3]} tag={p[4]} note={p[5]} featured={!!p[4]} ctaLabel={s.cta(k + 1)} onCta={() => go("contacto")} />)}</Grid>
     </Section>
+
+    {/* NUEVO: Tabla comparativa de servicios */}
+    <Section bg="var(--color-white)">
+      <SectionHead eyebrow="Compará opciones" title="¿Cuál servicio se adapta a tu operación?" lead="Las 4 modalidades de Envíos DosRuedas lado a lado para que elijas la ideal." />
+      <ComparisonTable highlightedService={service} />
+    </Section>
+
     {s.steps && <Section bg="var(--color-neutral-50)"><SectionHead eyebrow="Paso a paso" title={s.stepsTitle} /><Steps items={s.steps.map(([title, body]) => ({ title, body }))} /></Section>}
     {s.uses && <Section bg={s.steps ? "var(--color-white)" : "var(--color-neutral-50)"}>
       <SectionHead eyebrow={s.steps ? "Puesta en marcha" : "Casos de uso"} title={s.useTitle} />
       <Grid min={260}>{s.uses.map(([t, b, li]) => <BezelCard key={t}><div style={{ display: "flex", flexDirection: "column", gap: 12 }}><h3 style={{ margin: 0, font: "400 22px/1.05 var(--font-subheading)", letterSpacing: ".025em", textTransform: "uppercase" }}>{t}</h3><p style={{ margin: 0, font: "400 14px/1.625 var(--font-sans)" }}>{b}</p><ul style={{ listStyle: "none", margin: 0, padding: "12px 0 0", borderTop: "1px solid var(--color-brand-blue-100)", display: "flex", flexDirection: "column", gap: 6 }}>{li.map((x) => <li key={x} style={{ display: "flex", gap: 8, font: "400 14px/1.4 var(--font-sans)" }}><Icon d={ICONS.check} size={16} style={{ flexShrink: 0, marginTop: 2 }} />{x}</li>)}</ul></div></BezelCard>)}</Grid>
     </Section>}
-    <CtaForm />
+    <CtaForm service={waService} />
     <SocialBand />
   </>;
 }

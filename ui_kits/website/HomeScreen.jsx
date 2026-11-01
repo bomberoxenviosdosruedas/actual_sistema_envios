@@ -67,7 +67,10 @@ function HomeScreen({ go }) {
       <Badge icon={<Icon d={ICONS.pin} />}>Flota propia · Todo Mar del Plata</Badge>
       <H1>El motor de tu <Mark>última milla</Mark> Somos la solución a tus envíos</H1>
       <Lead invert>Mensajería y logística e-commerce en Mar del Plata: envíos en el día con motos propias. Llegamos a toda la ciudad y los repartidores son nuestros, sin tercerizar.</Lead>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}><Button size="lg" onClick={() => go("contacto")}>Cotizá tu envío</Button><Button variant="ghost" surface="dark" size="lg" hideIcon onClick={() => go("express")}>Ver servicios</Button></div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: 16, alignItems: "center" }}>
+        <WhatsAppCTA service="general" size="lg" variant="primary">Cotizá tu envío</WhatsAppCTA>
+        <Button variant="ghost" surface="dark" size="lg" hideIcon onClick={() => go("express")}>Ver servicios</Button>
+      </div>
     </Hero>
     <div style={{ borderTop: "1px solid rgba(255,255,255,.18)", background: "var(--color-brand-blue-500)", backgroundImage: "linear-gradient(rgba(255,255,255,.06),rgba(255,255,255,.06))", color: "var(--color-white)", padding: "16px 0" }} aria-label="Diferenciales de Envíos DosRuedas"><Marquee duration={30} gap={40}>{DIFS.map((d) => <span key={d} style={{ display: "inline-flex", alignItems: "center", gap: 40, font: "400 24px/1 var(--font-subheading)", letterSpacing: ".05em", textTransform: "uppercase", whiteSpace: "nowrap" }}>{d}<span style={{ width: 8, height: 8, borderRadius: 2, background: "var(--color-brand-yellow-500)" }}></span></span>)}</Marquee></div>
     <Section>
